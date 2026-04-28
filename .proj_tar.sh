@@ -1,0 +1,1 @@
+tar -czf mem0.tar.gz --exclude-from=mem0/.proj_tar_exclude mem0/

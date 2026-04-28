@@ -190,3 +190,6 @@ eval/
 qdrant_storage/
 .crossnote
 testing.ipynb
+
+# custom files
+server/config.yaml

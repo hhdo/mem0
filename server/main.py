@@ -131,6 +131,9 @@ DEFAULT_CONFIG = {
     "history_db_path": HISTORY_DB_PATH,
 }
 
+import yaml
+with open("config.yaml", encoding="utf-8") as f:
+    DEFAULT_CONFIG = yaml.safe_load(f)
 
 set_session_factory(SessionLocal)
 initialize_state(DEFAULT_CONFIG)
