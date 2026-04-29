@@ -68,6 +68,8 @@ services:
       - NEXT_PUBLIC_API_URL=${PUBLIC_HOST:-http://localhost}:8888
       - API_INTERNAL_URL=http://mem0:8000
       - NEXT_PUBLIC_INSTANCE_NAME=${NEXT_PUBLIC_INSTANCE_NAME:-Mem0}
+      # Internal HTTP deployments (no TLS) must not use Secure cookies.
+      - MEM0_COOKIE_SECURE=${MEM0_COOKIE_SECURE:-false}
     depends_on:
       mem0:
         condition: service_started

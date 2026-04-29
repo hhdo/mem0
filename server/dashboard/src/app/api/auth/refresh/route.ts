@@ -4,9 +4,22 @@ import { AUTH_ENDPOINTS } from "@/utils/api-endpoints";
 import { getServerApiUrl } from "@/lib/server-api-url";
 
 const COOKIE_NAME = "mem0_refresh_token";
+
+function parseBool(value: string | undefined): boolean | undefined {
+  if (value == null) return undefined;
+  const v = value.trim().toLowerCase();
+  if (["1", "true", "yes", "y", "on"].includes(v)) return true;
+  if (["0", "false", "no", "n", "off"].includes(v)) return false;
+  return undefined;
+}
+
+const COOKIE_SECURE =
+  parseBool(process.env.MEM0_COOKIE_SECURE) ??
+  (process.env.NODE_ENV === "production");
+
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  secure: COOKIE_SECURE,
   sameSite: "lax" as const,
   path: "/",
   maxAge: 30 * 24 * 60 * 60, // 30 days
