@@ -55,6 +55,10 @@ class MemoryConfig(BaseModel):
         description="Custom instructions for fact extraction",
         default=None,
     )
+    use_input_language: bool = Field(
+        description="Whether to preserve and use input language for memory extraction",
+        default=False,
+    )
 
 
 class AzureConfig(BaseModel):
