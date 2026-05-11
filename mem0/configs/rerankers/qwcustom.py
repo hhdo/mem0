@@ -18,12 +18,12 @@ class QWCustomRerankerConfig(BaseRerankerConfig):
 
     model: str = Field(
         default="qwen3-rerank",
-        description="Model to use for reranking. Available models: qwen3-rerank, gte-rerank-v2, Qwen3-Reranker-8B",
+        description="Model to use for reranking. Available models: qwen3-rerank, gte-rerank-v2, Qwen3-Reranker-8B, bge-reranker-base-v2",
     )
     api_key: Optional[str] = Field(default=None, description="DashScope API key")
     api_url: Optional[str] = Field(default=None, description="reranker API URL")
     return_documents: Optional[bool] = Field(
-        default=True, description="return documents(Only for gte-rerank-v2)"
+        default=True, description="return documents(Only for gte-rerank-v2, bge-reranker-base-v2)"
     )
     top_k: Optional[int] = Field(
         default=100, description="Number of top documents to return after reranking"

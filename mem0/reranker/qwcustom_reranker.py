@@ -36,9 +36,9 @@ class QWCustomReranker(BaseReranker):
         self.model = (
             config.model or os.getenv("RERANKER_CONFIG_MODEL") or "qwen3-rerank"
         )
-        if self.model not in ["qwen3-rerank", "gte-rerank-v2", "Qwen3-Reranker-8B"]:
+        if self.model not in ["qwen3-rerank", "gte-rerank-v2", "Qwen3-Reranker-8B", "bge-reranker-base-v2"]:
             raise ValueError(
-                "Invalid model name. Supported models are 'qwen3-rerank', 'gte-rerank-v2', and 'Qwen3-Reranker-8B'."
+                "Invalid model name. Supported models are 'qwen3-rerank', 'gte-rerank-v2', 'Qwen3-Reranker-8B', 'bge-reranker-base-v2'."
             )
         self.return_documents = config.return_documents or True
 
@@ -102,9 +102,17 @@ class QWCustomReranker(BaseReranker):
                 "query": query,
                 "top_n": top_k or self.config.top_k or len(documents),
             }
+        elif self.model == "bge-reranker-base-v2":
+            data = {
+                "model": self.model,
+                "documents": doc_texts,
+                "query": query,
+                "top_n": top_k or self.config.top_k or len(documents),
+                "return_documents": self.return_documents,
+            }
         else:
             raise ValueError(
-                "Invalid model name. Supported models are 'qwen3-rerank', 'gte-rerank-v2', and 'Qwen3-Reranker-8B'."
+                "Invalid model name. Supported models are 'qwen3-rerank', 'gte-rerank-v2', 'Qwen3-Reranker-8B', 'bge-reranker-base-v2'."
             )
 
         try:
@@ -120,6 +128,8 @@ class QWCustomReranker(BaseReranker):
             if self.model == "qwen3-rerank":
                 results = response_data.get("results", [])    
             elif self.model == "Qwen3-Reranker-8B":
+                results = response_data.get("results", [])
+            elif self.model == "bge-reranker-base-v2":
                 results = response_data.get("results", [])
             else:
                 results = response_data.get("output", {}).get("results", [])
